@@ -1,103 +1,112 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Card } from "@/components/ui";
+
+const PIPELINE = [
+  { name: "Safety triage", detail: "Deterministic rules run before any model call. Emergencies bypass the LLM entirely." },
+  { name: "Retrieval", detail: "BM25 over a clinician-reviewed knowledge base, with patient-language synonym expansion." },
+  { name: "Memory read", detail: "Longitudinal facts (doses, symptoms, goals, barriers) personalize every answer." },
+  { name: "Generation", detail: "Claude streams a grounded answer that cites guidance ids. Abstains if nothing matches." },
+  { name: "Validation", detail: "Every citation is checked against what was actually retrieved." },
+  { name: "Memory write", detail: "Structured-output extraction adds new durable facts; newer facts supersede old ones." },
+];
+
+const FEATURES = [
+  {
+    title: "AI patient coaching",
+    body: "Streaming chat grounded only in approved guidance, with inline citations and personalization from patient memory.",
+    href: "/patient",
+  },
+  {
+    title: "Patient memory",
+    body: "Facts extracted from conversation into a typed, longitudinal record that clinicians can read and the coach can use.",
+    href: "/clinician",
+  },
+  {
+    title: "Clinician workflow",
+    body: "Escalation queue with acknowledgement, a memory timeline, and an LLM-generated pre-visit brief.",
+    href: "/clinician",
+  },
+  {
+    title: "Observability",
+    body: "Per-request traces with a span waterfall, token usage, safety level, sources, and citation-validation errors.",
+    href: "/observability",
+  },
+  {
+    title: "Evals as release gates",
+    body: "Emergency recall, triage accuracy, retrieval hit@3, abstention, and memory extraction, run in CI.",
+    href: "/evals",
+  },
+  {
+    title: "Runs anywhere",
+    body: "Live mode uses Claude via the Anthropic SDK. Without a key, a deterministic responder keeps the hosted demo free.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="space-y-10">
+      <section className="pt-6">
+        <p className="mb-2 text-sm font-medium text-teal-700">Full-stack AI · Clinical systems demo</p>
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+          An AI care companion that extends GLP-1 obesity care between appointments.
+        </h1>
+        <p className="mt-3 max-w-2xl text-slate-600">
+          CareLoop pairs a patient-facing coach with clinician tools. Answers are grounded in reviewed guidance, personalized by
+          longitudinal memory, gated by safety triage, and fully traced and evaluated.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link href="/patient" className="rounded-lg bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800">
+            Open patient app →
+          </Link>
+          <Link href="/clinician" className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:border-slate-400">
+            Open clinician portal
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Request pipeline</h2>
+        <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+          {PIPELINE.map((s, i) => (
+            <li key={s.name} className="relative rounded-xl border border-slate-200 bg-white p-3">
+              <div className="mb-1 flex items-center gap-2">
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-teal-700 text-[11px] font-medium text-white">{i + 1}</span>
+                <span className="text-sm font-medium">{s.name}</span>
+              </div>
+              <p className="text-xs leading-relaxed text-slate-600">{s.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {FEATURES.map((f) => {
+          const card = (
+            <Card className="h-full transition hover:border-teal-600">
+              <h3 className="font-semibold">{f.title}</h3>
+              <p className="mt-1 text-sm text-slate-600">{f.body}</p>
+            </Card>
+          );
+          return f.href ? (
+            <Link key={f.title} href={f.href}>
+              {card}
+            </Link>
+          ) : (
+            <div key={f.title}>{card}</div>
+          );
+        })}
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Stack</h2>
+        <div className="flex flex-wrap gap-2 text-sm">
+          {["Next.js 15 (App Router)", "TypeScript", "React 19", "Tailwind CSS", "Anthropic SDK · Claude", "Zod structured outputs", "NDJSON streaming", "BM25 retrieval", "tsx eval runner"].map((t) => (
+            <span key={t} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-700">
+              {t}
+            </span>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
