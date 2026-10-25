@@ -1,5 +1,7 @@
 # CareLoop
 
+**Live demo: [careloop-aarya.vercel.app](https://careloop-aarya.vercel.app)**
+
 **An AI care companion that extends GLP-1 obesity care between appointments.** A patient-facing coach and a clinician portal share one intelligence layer: grounded retrieval, longitudinal patient memory, deterministic safety triage, request tracing, and an eval suite that gates releases.
 
 > Portfolio demo with fictional patients. Not medical advice. The knowledge-base content is illustrative and has not been clinically reviewed.
